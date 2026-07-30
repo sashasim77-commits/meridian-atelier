@@ -17,6 +17,11 @@
   --color-button: #A59F93;
   --color-wordmark: #FFCBA5;
   --color-hairline: #383735;
+  /* content-pass 30.07.2026, по ревью Джины: деликатный локальный scrim под
+     светлым заголовком карточки на реальных фото — ореол по глифам
+     (стабилен в hover / touch-sticky / reduced-motion; цвет от --color-text) */
+  --card-title-scrim: 0 1px 2px rgba(56, 55, 53, 0.30),
+    0 0 18px rgba(56, 55, 53, 0.38), 0 0 56px rgba(56, 55, 53, 0.34);
 
   /* --- Гарнитуры (self-hosted, OFL) --- */
   --font-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;

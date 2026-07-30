@@ -216,6 +216,9 @@ body.menu-open {
   /* clip-path вместо overflow: hidden — не ломает position: sticky внутри слоя */
   clip-path: inset(0);
   color: var(--color-text-inverse);
+  /* content-pass: локальный scrim — на светлых фото (Quarry/Tidewater/Larkspur)
+     заголовок без него тонет */
+  text-shadow: var(--card-title-scrim);
 }
 
 /* --- pointer: fine — заголовок появляется при hover/фокусе --- */

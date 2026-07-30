@@ -73,7 +73,9 @@ body.menu-open {
   transition: opacity var(--transition-ui);
 }
 
-.social-line__link:hover {
+/* content-pass §8: hover только у настоящих ссылок — Instagram/LinkedIn
+   стали неинтерактивным текстом (span) до появления реальных профилей */
+a.social-line__link:hover {
   opacity: 0.6;
 }
 

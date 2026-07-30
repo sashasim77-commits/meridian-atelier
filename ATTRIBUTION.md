@@ -3,12 +3,11 @@
 ## Imagery
 
 All photographs on this site are AI-generated for this educational study
-(July 2026): the hero, footer background and five project images were
-generated with Google Gemini; prompts by the project authors. No real
-buildings or third-party photographs are depicted. Visible generator
-watermarks were cropped out; generator-embedded provenance metadata
-(e.g. SynthID) may remain by design. The five process illustrations are
-original hand-drawn SVGs made for this project.
+(July 2026): the hero, footer background, five project images and five process
+images were generated with Google Gemini; prompts by the project authors.
+No real buildings or third-party photographs are depicted. Some images
+retain the generator's visible mark; generator-embedded provenance
+metadata (e.g. SynthID) may remain by design.
 
 ## Fonts
 

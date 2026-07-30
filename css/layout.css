@@ -1,0 +1,286 @@
+/* ============================================================
+   Meridian Atelier — layout: шапка, секции, сетка, футер.
+   Full-bleed: max-width контейнера нет, поля --space-page.
+   ============================================================ */
+
+/* --- Шапка --- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 var(--space-page);
+  background: var(--color-bg);
+  border-bottom: var(--hairline);
+  transition: background var(--transition-ui), border-color var(--transition-ui);
+}
+
+.site-header__brand {
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+}
+
+.menu-btn {
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+  font-size: var(--text-menu-btn-size);
+  line-height: var(--text-menu-btn-lh);
+}
+
+/* Меню открыто: шапка растворяется в кремовом оверлее */
+body.menu-open .site-header {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* --- Hero --- */
+
+.hero {
+  height: calc(100vh - var(--header-h));
+  background: var(--color-image-placeholder);
+}
+
+.hero__media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Манифест --- */
+
+/* Вертикальный ритм: как у референса — grid-обёртка с gap 20px,
+   большой воздух живёт ВНУТРИ секций (манифест 150/120 и т.п.) */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-main-gap);
+}
+
+.manifesto {
+  padding: var(--space-manifesto-pad) var(--space-page);
+}
+
+.manifesto__heading {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* --- Заголовочная строка секции --- */
+
+.section-head {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  margin: 0 var(--space-page);
+  padding: 15px 0 0;
+  border-top: var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .section-head {
+    padding-top: 20px;
+  }
+}
+
+.section-head__title {
+  margin-right: auto;
+}
+
+.section-head__count {
+  position: absolute;
+  left: 74%;
+  top: 20px;
+}
+
+.section-head__link {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Видимый текст «View all» у референса — антиква 16/20.4 [computed span,
+   доснято 29.07]; ссылка «Studio» остаётся sans (.text-link) */
+.section-head__link-text {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--text-ui-size);
+  line-height: 20.4px;
+}
+
+.section-head__arrow {
+  width: 28px;  /* [DOM, 390: стрелка 28×20 вместо текста View all] */
+  height: 20px;
+}
+
+/* <768: текст View all и счётчик скрыты, остаётся стрелка */
+@media (max-width: 767px) {
+  .section-head__link-text,
+  .section-head__count {
+    display: none;
+  }
+
+  .section-head__link {
+    text-decoration: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .section-head__arrow {
+    display: none;
+  }
+}
+
+/* --- Featured Projects --- */
+
+.projects {
+  padding-bottom: var(--space-section);
+}
+
+.projects__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card-gap);
+  padding: 70px var(--space-page) 0;
+}
+
+@media (min-width: 768px) {
+  .projects__list {
+    padding-top: 130px;
+  }
+}
+
+/* --- Process --- */
+
+/* воздух до CTA даёт gap main (20px), как между секциями референса */
+
+/* --- CTA --- */
+
+.cta {
+  padding: 0 var(--space-page) var(--space-main-gap);
+}
+
+.cta__panel {
+  background: var(--color-bg-cta);
+  padding: var(--space-page);
+}
+
+/* --- Футер, экран 1: кремовая навигация --- */
+
+.footer-nav {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 52px;
+  min-height: 100vh;
+  padding: var(--header-h) var(--space-page) 40px;
+  background: var(--color-bg-menu);
+}
+
+.footer-nav__list li {
+  border-bottom: var(--hairline);
+}
+
+.footer-nav__list li:first-child {
+  border-top: var(--hairline);
+}
+
+.footer-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--footer-nav-row-h);
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+  font-size: var(--text-footer-nav-size);
+  line-height: var(--text-footer-nav-lh);
+  transition: opacity var(--transition-ui);
+}
+
+.footer-nav__link:hover {
+  opacity: 0.6; /* [approx] hover-эффект строк не снят точно */
+}
+
+.footer-nav__arrow {
+  width: calc(var(--text-footer-nav-size) * 1.0);
+  height: calc(var(--text-footer-nav-size) * 0.75);
+  flex: none;
+}
+
+.footer-nav__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+/* --- Футер, экран 2: wordmark-медиа с parallax-reveal --- */
+
+.footer-reveal {
+  position: relative;
+  z-index: -1;
+  height: 200vh;
+  margin-top: -100vh;
+}
+
+.footer-reveal__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-image-placeholder);
+}
+
+.footer-reveal__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.footer-reveal__wordmark {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+  color: var(--color-wordmark);
+  mix-blend-mode: difference;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+/* Масштаб по повторной съёмке 28.07: глифы референса — высота 107px на 1440
+   (viewBox 510×107 и 750×107, контейнер 1380 их центрирует), на 390 высота ~55px.
+   Кегль общий для обеих строк, ширина строки — естественная, по центру. */
+.footer-reveal__line {
+  font-size: 19vw; /* ≈74px на 390 → высота прописных ≈55px */
+}
+
+@media (min-width: 768px) {
+  .footer-reveal__line {
+    font-size: min(10vw, 147px); /* ≈144px на 1440 → высота прописных ≈107px */
+  }
+}
+
+.footer-reveal__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.footer-reveal__line--top {
+  top: 8px;
+}
+
+.footer-reveal__line--bottom {
+  bottom: 8px;
+}

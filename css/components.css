@@ -1,0 +1,627 @@
+/* ============================================================
+   Meridian Atelier — components: меню-оверлей, карточка,
+   Process (двухрежимный), кнопка, CTA.
+   ============================================================ */
+
+/* ============ Меню-оверлей ============ */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: var(--color-bg-menu);
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition:
+    transform var(--transition-menu-duration) var(--ease) var(--transition-menu-delay),
+    visibility 0s calc(var(--transition-menu-duration) + var(--transition-menu-delay));
+}
+
+body.menu-open .menu-overlay {
+  transform: translateY(0);
+  visibility: visible;
+  transition:
+    transform var(--transition-menu-duration) var(--ease) var(--transition-menu-delay),
+    visibility 0s var(--transition-menu-delay);
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+.menu-overlay__inner {
+  position: relative;
+  height: 100%;
+  padding-top: var(--header-h);
+}
+
+.menu-overlay__nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.menu-overlay__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+  font-size: var(--text-menu-size);
+  line-height: var(--text-menu-lh);
+  transition: opacity var(--transition-ui);
+}
+
+.menu-overlay__link:hover {
+  opacity: 0.6; /* [approx] hover пунктов меню не снят точно */
+}
+
+.menu-overlay__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: var(--hairline);
+}
+
+.social-line sup {
+  font-family: var(--font-serif);
+}
+
+.social-line__link {
+  transition: opacity var(--transition-ui);
+}
+
+.social-line__link:hover {
+  opacity: 0.6;
+}
+
+/* --- Меню <768: один столбец, строки со стрелками --- */
+
+@media (max-width: 767px) {
+  .menu-overlay__aside {
+    display: none;
+  }
+
+  .menu-overlay__nav {
+    padding: 0 var(--space-page) 28px;
+  }
+
+  .menu-overlay__list li {
+    border-bottom: var(--hairline);
+  }
+
+  .menu-overlay__list li:first-child {
+    border-top: var(--hairline);
+  }
+
+  .menu-overlay__link {
+    height: 66px; /* [DOM] строка мобильного меню */
+  }
+
+  .menu-overlay__arrow {
+    width: 36px;
+    height: 27px;
+  }
+
+  .menu-overlay__foot {
+    border-top: 0;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* --- Меню ≥768: две колонки 50/50 с вертикальной линией --- */
+
+@media (min-width: 768px) {
+  .menu-overlay__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .menu-overlay__inner::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    border-left: var(--hairline);
+  }
+
+  .menu-overlay__aside {
+    position: relative;
+  }
+
+  .menu-overlay__vertical {
+    position: absolute;
+    left: var(--space-page);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .menu-overlay__vertical--top {
+    top: 34%;
+  }
+
+  .menu-overlay__vertical--bottom {
+    bottom: 28px;
+  }
+
+  .menu-overlay__inner {
+    padding-top: 0;
+  }
+
+  .menu-overlay__nav {
+    padding: 44px 20px 28px;
+  }
+
+  .menu-overlay__arrow {
+    display: none;
+  }
+
+  .menu-overlay__brand {
+    display: none;
+  }
+
+  .menu-overlay__foot {
+    padding-top: 24px;
+  }
+
+  .social-line {
+    text-align: center;
+  }
+}
+
+/* ============ Карточка проекта ============ */
+
+.card {
+  position: relative;
+  display: block;
+}
+
+.card__media {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.card__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--card-ratio);
+  object-fit: cover;
+}
+
+.card__title {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+  font-size: var(--text-hero-card-size);
+  line-height: var(--text-hero-card-lh);
+  letter-spacing: var(--text-hero-card-ls);
+  text-align: center;
+}
+
+.card__title--dark {
+  z-index: 0;
+  color: var(--color-text);
+}
+
+.card__title--light {
+  z-index: 2;
+  /* clip-path вместо overflow: hidden — не ломает position: sticky внутри слоя */
+  clip-path: inset(0);
+  color: var(--color-text-inverse);
+}
+
+/* --- pointer: fine — заголовок появляется при hover/фокусе --- */
+
+@media (pointer: fine) {
+  .card__title {
+    opacity: 0;
+    transition: opacity var(--transition-card-title);
+  }
+
+  .card__title-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .card:hover .card__title,
+  .card:focus-visible .card__title {
+    opacity: 1;
+  }
+}
+
+/* --- pointer: coarse — sticky-слой, прозрачность от прокрутки --- */
+
+@media (pointer: coarse) {
+  .card__title {
+    opacity: var(--view-opacity, 0);
+  }
+
+  .card__title-inner {
+    position: sticky;
+    top: 45vh; /* [approx] титул референса замирает на ~401px вьюпорта 844 */
+    display: block;
+  }
+}
+
+@media (pointer: coarse) and (prefers-reduced-motion: reduce) {
+  .card__title {
+    opacity: 1;
+  }
+
+  .card__title-inner {
+    position: static;
+    padding-top: 45vh;
+  }
+}
+
+/* Вариант Б: при reduced-motion заголовки статично видимы и при мыши —
+   не прятать контент за hover-анимацией */
+@media (pointer: fine) and (prefers-reduced-motion: reduce) {
+  .card__title {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* --- Раскладка карточек ≥1024: чередуются и позиции, и ширины ---
+   [DOM, 1440, повторная съёмка 28.07]: 1104/1104/966/828/1104 на полосе 1380
+   = 80% / 80% / 70% / 60% / 80%; позиции центр/лево/право/лево/право */
+
+@media (min-width: 1024px) {
+  .card {
+    width: 80%;
+  }
+
+  .projects__list .card:nth-child(3) {
+    width: 70%;
+  }
+
+  .projects__list .card:nth-child(4) {
+    width: 60%;
+  }
+
+  .card--left {
+    margin-right: auto;
+  }
+
+  .card--center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card--right {
+    margin-left: auto;
+  }
+}
+
+/* ============ Process — двухрежимный компонент ============ */
+
+.process__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/* Иконка +/− */
+
+.process__icon {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.process__icon::before,
+.process__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.process__icon::after {
+  transform: rotate(90deg);
+  transition: transform var(--transition-icon);
+}
+
+.process__item.is-open .process__icon::after {
+  transform: rotate(0deg);
+}
+
+/* --- <1024: настоящий аккордеон на кремовой панели --- */
+
+@media (max-width: 1023px) {
+  .process__body {
+    margin: 40px var(--space-page) 0;
+    background: var(--color-bg-menu);
+    padding: 8px var(--space-page) 120px; /* [approx] нижний воздух кремовой панели */
+  }
+
+  .process__item {
+    border-bottom: var(--hairline);
+  }
+
+  .process__label {
+    /* высота строки: контент + py 20px = 64px mobile / 88px tablet */
+  }
+
+  .process__btn {
+    padding: var(--space-row-pad) 0;
+  }
+
+  .process__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s var(--ease);
+  }
+
+  .process__panel-body {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .process__item.is-open .process__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .process__img {
+    display: none; /* изображение процесса — только desktop-режим */
+  }
+
+  .process__text {
+    padding: 8px 0 28px;
+  }
+
+  .process__text p {
+    font-size: 16px;
+    line-height: 20.4px; /* [computed] текст панели аккордеона референса */
+    text-indent: 28px;
+  }
+
+  .process__text p + p {
+    margin-top: 12px;
+  }
+
+  /* Без JS все панели раскрыты — контент доступен */
+  html:not(.js) .process__panel {
+    grid-template-rows: 1fr;
+  }
+}
+
+/* --- ≥1024: hover/selection-список, НЕ аккордеон --- */
+
+@media (min-width: 1024px) {
+  .process__body {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    margin: 72px var(--space-page) 0;
+    min-height: 600px;
+    border-bottom: var(--hairline);
+    padding-bottom: 16px;
+  }
+
+  /* вертикальная линия правой текстовой колонки */
+  .process__body::after {
+    content: "";
+    position: absolute;
+    right: 25.5%;
+    top: 0;
+    bottom: 16px;
+    border-left: var(--hairline);
+  }
+
+  .process__list {
+    width: 34%;
+  }
+
+  .process__item + .process__item {
+    margin-top: var(--space-row-gap);
+  }
+
+  .process__label {
+    transition: opacity var(--transition-ui);
+  }
+
+  /* наведённый/сфокусированный пункт остаётся, остальные гаснут до 0.3 */
+  .process__list:hover .process__item:not(:hover) .process__label,
+  .process__list:focus-within .process__item:not(:focus-within) .process__label {
+    opacity: 0.3;
+  }
+
+  .process__btn {
+    pointer-events: none; /* как у референса; hover ловит li, клавиатура работает */
+    padding: 0;
+  }
+
+  .process__icon {
+    display: none;
+  }
+
+  /* панель = оверлей всего body: изображение в центре, текст справа */
+  .process__panel {
+    position: absolute;
+    inset: 0 0 16px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-ui), visibility 0s var(--transition-ui);
+  }
+
+  .process__item.is-open .process__panel {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transition-ui), visibility 0s;
+  }
+
+  .process__panel-body {
+    height: 100%;
+  }
+
+  .process__img {
+    position: absolute;
+    left: 24%;
+    top: 0;
+    width: 28.5%;
+    aspect-ratio: 6 / 7;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .process__text {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 22.5%;
+  }
+
+  .process__text p {
+    text-indent: 28px;
+  }
+
+  .process__text p + p {
+    margin-top: 8px;
+  }
+
+  /* Без JS активен первый пункт — контент виден */
+  html:not(.js) .process__item:first-child .process__panel {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* ============ Кнопка ============ */
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--color-button);
+  border-radius: var(--radius-button);
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+  font-size: var(--text-ui-size);
+  line-height: var(--text-ui-lh);
+  text-align: center;
+  transition: opacity var(--transition-ui);
+}
+
+.button:hover {
+  opacity: 0.85; /* [approx] hover кнопки референса не снят точно */
+}
+
+/* ============ CTA ============ */
+
+.cta__heading {
+  font-family: var(--font-sans);
+  font-weight: var(--font-sans-weight);
+  font-size: var(--text-cta-heading-size);
+  line-height: var(--text-cta-heading-lh);
+  letter-spacing: var(--text-cta-heading-ls);
+}
+
+.cta__col {
+  text-indent: 28px;
+}
+
+/* --- CTA <1024: одна колонка --- */
+
+@media (max-width: 1023px) {
+  .cta__panel {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 2 * var(--space-page));
+  }
+
+  .cta__left {
+    flex: 1;
+  }
+
+  .cta__vertical {
+    display: none;
+  }
+
+  .cta__right {
+    border-top: var(--hairline);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .cta__columns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* --- CTA ≥1024: две колонки 50/50 с вертикальной линией --- */
+
+@media (min-width: 1024px) {
+  .cta__panel {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 2 * var(--space-page));
+  }
+
+  .cta__panel::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    border-left: var(--hairline);
+  }
+
+  .cta__heading {
+    max-width: 500px;
+  }
+
+  .cta__left {
+    position: relative;
+    padding-right: 40px;
+  }
+
+  .cta__vertical {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .cta__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    padding-left: 24px;
+  }
+
+  .cta__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+}

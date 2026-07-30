@@ -1,0 +1,127 @@
+/* ============================================================
+   Meridian Atelier — design tokens.
+   Единственный источник значений: output/02-design-tokens.md.
+   Mobile-значения — по умолчанию, desktop — в @media (min-width: 768px).
+   ============================================================ */
+
+:root {
+  /* --- Цветовые роли --- */
+  --color-bg: #F8F7F7;
+  --color-bg-menu: #F0F0E6;
+  --color-text: #383735;
+  --color-text-inverse: #F8F7F7;
+  --color-bg-cta: #D9D4CE;
+  --color-image-placeholder: #D9D4CE;
+  /* A11y вариант Б: производственный тон кнопки #A59F93 (+ текст #383735 = 4.52:1);
+     референсный тон #948E82 (3.65:1) не используется по решению Фазы 3 */
+  --color-button: #A59F93;
+  --color-wordmark: #FFCBA5;
+  --color-hairline: #383735;
+
+  /* --- Гарнитуры (self-hosted, OFL) --- */
+  --font-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --font-sans-weight: 500; /* решение Саши 29.07 (сравнение 400 vs 500); антиква остаётся 400 */
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+  /* --- Типографика: mobile <768 --- */
+  --text-hero-card-size: 42px;
+  --text-hero-card-lh: 42px;
+  --text-hero-card-ls: -0.84px;
+
+  --text-menu-size: 42px;
+  --text-menu-lh: 42px;
+
+  --text-display-size: 42px;
+  --text-display-lh: 42px;
+  --text-display-ls: -0.84px;
+
+  --text-section-size: 30px;
+  --text-section-lh: 24px;
+  --text-section-ls: 0px;
+
+  --text-cta-heading-size: 30px;
+  --text-cta-heading-lh: 33px;
+  --text-cta-heading-ls: -0.75px;
+
+  --text-menu-btn-size: 20px;
+  --text-menu-btn-lh: 20px;
+
+  --text-ui-size: 16px;
+  --text-ui-lh: 16px;
+
+  --text-body-size: 16px;
+  --text-body-lh: 22.4px;
+
+  --text-caption-size: 12px;
+  --text-caption-lh: 12px;
+
+  --text-footer-nav-size: 40px;
+  --text-footer-nav-lh: 40px;
+  --footer-nav-row-h: 72px;
+
+  /* --- Пространство --- */
+  --space-page: 20px;
+  --header-h: 54px;
+  --space-row: 48px;          /* строка Process ≥1024 */
+  --space-row-gap: 10px;      /* зазор строк Process ≥1024 */
+  --space-row-pad: 20px;      /* паддинг строки Process <1024 */
+  --space-main-gap: 20px;     /* [DOM, повторная съёмка 28.07] зазор grid-обёртки main референса (gap-sm) */
+  --space-card-gap: 160px;    /* [DOM, 390] шаг карточек 508 = 348 + 160 */
+  --space-manifesto-pad: 120px; /* [computed, 390: py-2xl] вертикальный паддинг манифеста */
+  --space-section: 100px;     /* [approx] воздух после последней карточки до следующей секции, mobile */
+
+  /* --- Сетка --- */
+  /* Контейнера с max-width НЕТ — full-bleed, поля --space-page */
+  --card-width: 100%;         /* <1024 карточка на всю ширину минус поля */
+  --card-ratio: 350 / 348;    /* [DOM, 390, повторная съёмка 28.07] mobile-карточка ~квадрат 350×348 */
+
+  /* --- Радиусы, границы, тени --- */
+  --radius-button: 5px;
+  --hairline: 1px solid var(--color-hairline);
+  /* Теней нет нигде — box-shadow не используется */
+
+  /* --- Переходы --- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-ui: 0.5s var(--ease);
+  --transition-menu-duration: 0.9s;
+  --transition-menu-delay: 0.4s;
+  --transition-icon: 0.7s var(--ease);
+  --transition-card-title: 0.6s var(--ease); /* [approx] длительность в референсе не снята — подобрано визуально, показать Саше */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --text-hero-card-size: 114px;
+    --text-hero-card-lh: 102.6px;
+    --text-hero-card-ls: -2px;
+
+    --text-menu-size: 100px;
+    --text-menu-lh: 100px;
+
+    --text-display-size: 60px;
+    --text-display-lh: 60px;
+    --text-display-ls: -1.2px;
+
+    --text-section-size: 60px;
+    --text-section-lh: 48px;
+    --text-section-ls: -1.2px;
+
+    --text-cta-heading-size: 50px;
+    --text-cta-heading-lh: 45px;
+    --text-cta-heading-ls: -1.25px;
+
+    --text-body-size: 14px;
+    --text-body-lh: 17.85px;
+
+    --text-footer-nav-size: 100px;
+    --text-footer-nav-lh: 75px;
+    --footer-nav-row-h: 115px;
+
+    --space-page: 30px;
+    --header-h: 74px;
+    --space-card-gap: 200px;  /* [DOM, 1440: шаг 1040 = 841 + 199] */
+    --space-manifesto-pad: 150px; /* [computed, 1440: md:py-[150px]] */
+    --space-section: 120px;   /* [DOM, 1440: низ карточки → hairline = 140, минус gap 20] */
+    --card-ratio: 1104 / 841; /* пропорция карточки [DOM, 1440] */
+  }
+}

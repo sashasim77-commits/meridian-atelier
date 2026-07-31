@@ -322,22 +322,26 @@ main {
    Дрейф линейно связан с масштабом и всегда меньше его запаса — края
    закрыты во всех фазах. */
 
+/* КАЛИБРОВОЧНЫЙ вариант (31.07, решение Саши/Джины): заведомо заметное
+   движение для одного визуального решения Саши — оставить или назвать
+   коэффициент замедления. Не финальная деликатность. */
+
 @keyframes kb-hero {
-  from { transform: scale(1.01) translate(0, 0); }
-  to   { transform: scale(1.06) translate(-0.8%, 0.5%); }
+  from { transform: scale(1.02) translate(0, 0); }
+  to   { transform: scale(1.10) translate(-1.5%, 0.8%); }
 }
 
 @keyframes kb-footer {
-  from { transform: scale(1.055) translate(0.7%, -0.45%); }
-  to   { transform: scale(1.005) translate(0, 0); }
+  from { transform: scale(1.09) translate(1.3%, -0.7%); }
+  to   { transform: scale(1.01) translate(0, 0); }
 }
 
 .hero__media {
-  animation: kb-hero 18s linear -4.5s infinite alternate;
+  animation: kb-hero 6s linear -1.5s infinite alternate;
 }
 
 .footer-reveal__media {
-  animation: kb-footer 22s linear -5.5s infinite alternate;
+  animation: kb-footer 7s linear -1.75s infinite alternate;
 }
 
 /* Явная статика при reduced-motion — не полагаемся на глобальное

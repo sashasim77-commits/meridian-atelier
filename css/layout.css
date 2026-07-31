@@ -344,6 +344,28 @@ main {
   animation: kb-footer 7s linear -1.75s infinite alternate;
 }
 
+/* Portrait-панорама hero (предложение Клавы, одобрено Джиной 31.07):
+   на вертикальном экране узкий кроп прячет движущиеся ориентиры, поэтому
+   вместо усиления зума через окно кропа проводится НОВОЕ содержимое кадра.
+   Элемент шире вьюпорта на 40% (по 20% скрытого запаса с каждой стороны,
+   исходно центрирован отрицательным полем), проезд ±9% ширины элемента
+   (≈±49px на 390) — всегда в пределах запаса, края закрыты. Zoom не
+   усиливается. Только hero и только portrait <768; в landscape и на
+   desktop действует утверждённый вариант. */
+@media (max-width: 767px) and (orientation: portrait) {
+  @keyframes kb-hero-pan {
+    from { transform: translateX(9%); }
+    to   { transform: translateX(-9%); }
+  }
+
+  .hero__media {
+    width: 140%;
+    max-width: none; /* резет img { max-width: 100% } клампил ширину панорамы */
+    margin-left: -20%;
+    animation: kb-hero-pan 6s linear -1.5s infinite alternate;
+  }
+}
+
 /* Явная статика при reduced-motion — не полагаемся на глобальное
    сокращение длительности */
 @media (prefers-reduced-motion: reduce) {
@@ -351,5 +373,13 @@ main {
   .footer-reveal__media {
     animation: none;
     transform: none;
+  }
+
+  /* fallback портретной панорамы — исходное статичное фото: обычная ширина
+     и центрирование */
+  .hero__media {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
   }
 }

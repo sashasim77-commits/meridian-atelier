@@ -292,7 +292,7 @@ a.social-line__link:hover {
   }
 
   .projects__list .card:nth-child(4) {
-    width: 60%;
+    width: 70%; /* финальное ТЗ 31.07: было 60% — уплотнение desktop-ленты */
   }
 
   .card--left {

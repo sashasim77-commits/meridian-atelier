@@ -166,6 +166,17 @@ main {
   }
 }
 
+/* Финальное ТЗ Джины 31.07: сознательное уплотнение desktop-ленты проектов
+   относительно геометрии референса — карточки выглядели разрозненными
+   островами. Локальная коррекция компонента, токены не тронуты;
+   <1024 без изменений. */
+@media (min-width: 1024px) {
+  .projects__list {
+    gap: 120px;
+    padding-top: 90px;
+  }
+}
+
 /* --- Process --- */
 
 /* воздух до CTA даёт gap main (20px), как между секциями референса */
@@ -305,22 +316,28 @@ main {
    Дрейф всегда меньше запаса от масштаба (0.5% < 1.5%) — пустые края
    не появляются ни в одной фазе. ============ */
 
+/* Корректировка воспринимаемости (финальное ТЗ Джины 31.07): движение
+   должно замечаться в первые 1–2 секунды. Линейная скорость постоянна;
+   отрицательная задержка открывает страницу в движущейся части цикла.
+   Дрейф линейно связан с масштабом и всегда меньше его запаса — края
+   закрыты во всех фазах. */
+
 @keyframes kb-hero {
-  from { transform: scale(1) translate(0, 0); }
-  to   { transform: scale(1.03) translate(-0.5%, 0.35%); }
+  from { transform: scale(1.01) translate(0, 0); }
+  to   { transform: scale(1.06) translate(-0.8%, 0.5%); }
 }
 
 @keyframes kb-footer {
-  from { transform: scale(1.028) translate(0.45%, -0.3%); }
-  to   { transform: scale(1) translate(0, 0); }
+  from { transform: scale(1.055) translate(0.7%, -0.45%); }
+  to   { transform: scale(1.005) translate(0, 0); }
 }
 
 .hero__media {
-  animation: kb-hero 52s ease-in-out infinite alternate;
+  animation: kb-hero 18s linear -4.5s infinite alternate;
 }
 
 .footer-reveal__media {
-  animation: kb-footer 60s ease-in-out infinite alternate;
+  animation: kb-footer 22s linear -5.5s infinite alternate;
 }
 
 /* Явная статика при reduced-motion — не полагаемся на глобальное

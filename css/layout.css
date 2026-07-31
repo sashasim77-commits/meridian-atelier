@@ -364,6 +364,23 @@ main {
     margin-left: -20%;
     animation: kb-hero-pan 6s linear -1.5s infinite alternate;
   }
+
+  /* Footer-панорама (ТЗ Джины 31.07): та же причина — спокойная центральная
+     полоса широкого кадра. Элемент 150% ширины, скрытый запас по 25% с
+     каждой стороны, проезд ±10% ширины элемента; wordmark и blend не
+     затрагиваются (сосед по DOM). inset:0 переопределён явными left/right. */
+  @keyframes kb-footer-pan {
+    from { transform: translateX(-10%); }
+    to   { transform: translateX(10%); }
+  }
+
+  .footer-reveal__media {
+    width: 150%;
+    max-width: none;
+    left: -25%;
+    right: auto;
+    animation: kb-footer-pan 7s linear -1.75s infinite alternate;
+  }
 }
 
 /* Явная статика при reduced-motion — не полагаемся на глобальное
@@ -375,11 +392,18 @@ main {
     transform: none;
   }
 
-  /* fallback портретной панорамы — исходное статичное фото: обычная ширина
+  /* fallback портретных панорам — исходные статичные фото: обычная ширина
      и центрирование */
   .hero__media {
     width: 100%;
     max-width: 100%;
     margin-left: 0;
+  }
+
+  .footer-reveal__media {
+    width: 100%;
+    max-width: 100%;
+    left: 0;
+    right: 0;
   }
 }

@@ -630,3 +630,72 @@ a.social-line__link:hover {
     align-items: start;
   }
 }
+
+/* ============ Studio (studio-pass 31.07.2026: новый раздел между
+   Process и CTA; собран из существующих ролей — section-head, колонки
+   как у CTA, интервалы --space-main-gap/--space-section, брейкпоинт 1024;
+   новых глобальных токенов нет) ============ */
+
+.studio {
+  padding-bottom: var(--space-section);
+}
+
+.studio__caption {
+  margin-left: auto;
+}
+
+.studio__body {
+  padding: 70px var(--space-page) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-main-gap);
+}
+
+.studio__columns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.studio__col {
+  text-indent: 28px;
+}
+
+.studio__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-main-gap);
+}
+
+.studio__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ≥1024: две редакционные строки — wide+tall и tall+wide.
+   Ширины 2.074:1 выравнивают высоты пары 16:9 и 6:7 в строке */
+@media (min-width: 1024px) {
+  .studio__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .studio__row {
+    display: grid;
+    grid-template-columns: 2.074fr 1fr;
+    align-items: stretch;
+  }
+
+  .studio__row--tall-first {
+    grid-template-columns: 1fr 2.074fr;
+  }
+
+  .studio__img {
+    height: 100%;
+    object-fit: cover;
+  }
+}

@@ -42,6 +42,8 @@ body.menu-open .site-header {
 .hero {
   height: calc(100vh - var(--header-h));
   background: var(--color-image-placeholder);
+  /* Ken Burns: масштаб медиа не должен выходить за секцию */
+  overflow: clip;
 }
 
 .hero__media {
@@ -58,6 +60,16 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--space-main-gap);
+}
+
+/* studio-pass, ревью Джины 31.07: якорные цели опускаются под sticky-шапку —
+   без offset её высота (--header-h) полностью закрывала заголовки секций */
+#main,
+#projects,
+#process,
+#studio,
+#contact {
+  scroll-margin-top: var(--header-h);
 }
 
 .manifesto {
@@ -283,4 +295,40 @@ main {
 
 .footer-reveal__line--bottom {
   bottom: 8px;
+}
+
+/* ============ Ken Burns (31.07.2026) — ВРЕМЕННЫЙ controlled enhancement:
+   имитация камеры до будущего настоящего video-pass (настоящее видео должно
+   оставлять архитектуру неподвижной и оживлять только воду/облака/свет).
+   Рамки Джины: масштаб ≤ ~1.03, дрейф ≤ 1% кадра, цикл 45–60 с,
+   ease-in-out + alternate (без скачка цикла), hero и footer различаются.
+   Дрейф всегда меньше запаса от масштаба (0.5% < 1.5%) — пустые края
+   не появляются ни в одной фазе. ============ */
+
+@keyframes kb-hero {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.03) translate(-0.5%, 0.35%); }
+}
+
+@keyframes kb-footer {
+  from { transform: scale(1.028) translate(0.45%, -0.3%); }
+  to   { transform: scale(1) translate(0, 0); }
+}
+
+.hero__media {
+  animation: kb-hero 52s ease-in-out infinite alternate;
+}
+
+.footer-reveal__media {
+  animation: kb-footer 60s ease-in-out infinite alternate;
+}
+
+/* Явная статика при reduced-motion — не полагаемся на глобальное
+   сокращение длительности */
+@media (prefers-reduced-motion: reduce) {
+  .hero__media,
+  .footer-reveal__media {
+    animation: none;
+    transform: none;
+  }
 }
